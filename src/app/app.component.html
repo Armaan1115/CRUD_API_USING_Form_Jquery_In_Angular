@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#"><b>Student Management</b></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#"><b><i class="fa-solid fa-house">&nbsp;</i>Home</b>
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#" routerLink="about"><b>About</b></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="privacy"><b>Privacy</b></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="student"><b>Student</b></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="dropdown"><b>DropDown</b></a>
+      </li>
+     
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+<div>
+  <body style="background-color:#0f0c29">
+    <router-outlet></router-outlet>
+  </body>
+</div>
