@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class StudentService {
-  baseUrl="https://localhost:44390/api/student";
+  baseUrl="http://localhost:60204/api/student";
 
   constructor(private httpClient:HttpClient) { }
 
@@ -19,17 +19,13 @@ export class StudentService {
   {
     return this.httpClient.post<Student>(this.baseUrl,newStudent);
   }
-  saveSubject(NewSubject:Student):Observable<Student>
-  {
-    return this.httpClient.post<Student["AvailableSubjects"]>(this.baseUrl,NewSubject);
-  }
   updateStudent(editStudent:Student):Observable<Student>
   {
     return this.httpClient.put<Student>(this.baseUrl,editStudent);
   }
   deleteStudent(id:number):Observable<any>
   {
-    return this.httpClient.delete<any>("https://localhost:44390/api/student/" + id);
+    return this.httpClient.delete<any>("http://localhost:60204/api/student/" + id);
   } 
   // GetAllSubject():Observable<any>{
   //   return this.httpClient.post<

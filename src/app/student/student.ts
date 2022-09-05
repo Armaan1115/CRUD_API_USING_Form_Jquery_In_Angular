@@ -6,10 +6,10 @@ export class Student {
     email: any;
     gender: any;
     address: any;
-    department: any;
-    AvailableSubjects:any;
-    subjects:[];
-   ;
+    subjectName:any;
+    subjectid:any;
+    subjectList:[];
+   
   
     constructor() {
       this.id = null;
@@ -19,9 +19,9 @@ export class Student {
       this.email = null;
       this.gender = null;
       this.address = null;
-      this.department = null;
-      this.AvailableSubjects=null;
-      this.subjects=[]
+      this.subjectName = "";
+      this.subjectid=0;
+      this.subjectList=[]
     }
   }
   

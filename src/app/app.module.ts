@@ -1,3 +1,6 @@
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { StudentComponent } from './student/student.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,6 +14,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { DropdownComponent } from './Cascading_Dropdown/dropdown/dropdown.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CheckBoxItemComponent } from './Checkbox/check-box-item/check-box-item.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -21,6 +25,8 @@ import { CheckBoxItemComponent } from './Checkbox/check-box-item/check-box-item.
     PrivacyComponent,
     DropdownComponent,
     CheckBoxItemComponent,
+    
+ 
 
   ],
   imports: [
@@ -29,7 +35,12 @@ import { CheckBoxItemComponent } from './Checkbox/check-box-item/check-box-item.
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule
+
 
   ],
   providers: [],

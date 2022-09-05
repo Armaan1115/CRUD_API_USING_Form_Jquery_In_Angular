@@ -1,9 +1,8 @@
+import { Subjects } from './../subject';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Student } from './student';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-
 import { StudentService } from './student.service';
 declare var $: any;
 
@@ -16,39 +15,38 @@ declare var $: any;
 export class StudentComponent implements OnInit {
   contactForm: FormGroup;
   StudentList: Student[] = [];
-  subjectList = [];
-  AvailableSubjects=[];
-  dropdownList = [];
-  selectedItems = [];
-  dropdownSettings: IDropdownSettings = {}
   newStudent: Student = new Student();
   editStudent: Student = new Student();
-  constructor(private studentService: StudentService, private fb: FormBuilder,private http: HttpClient) { }
+  subjects:Subjects[]=[]
+  GetSubject()
+  {
+    this.subjects = [
+      {id: 39, name: "Hindi" , isSelected: false},
+      {id: 40, name: "English", isSelected: false},
+      {id: 41, name: "Math", isSelected: false},
+      {id: 42, name: "Urdu", isSelected: false},
+      {id: 43, name: "Social Science", isSelected: false}
+    ];
+    
+  }
+  constructor(private studentService: StudentService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.GetAll();
-    this.GetData();
+    this.GetSubject();
 
     this.contactForm = this.fb.group({
       country: [null]
     });
+
 
     $(document).ready(function(){
     $("#btn1").click(function () {
       $("#maindiv").slideToggle(3000)
       });
     })
-  
-     this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
-    };
   }
+  
   GetAll() {
     this.studentService.GetAllStudent().subscribe
       ((response) => {
@@ -60,21 +58,21 @@ export class StudentComponent implements OnInit {
         }
       )
   }
-  GetData():void{
-    let tmp = [];
-    this.http.get<any>('https://localhost:44390/api/Checkeditems/api/subject').subscribe
-      ((data) => {
-        for(let i=0; i < data.length; i++){
-          tmp.push({ item_id: i, item_text: data[i].name });
-        }
-        // console.log(Response)
-        this.dropdownList = tmp;
-      },
-        (error) => {
-          console.log(error);
-        }
-      )
-  }
+  // GetData():void{
+  //   let tmp = [];
+  //   this.http.get<any>('https://localhost:44390/api/Checkeditems/api/subject').subscribe
+  //     ((data) => {
+  //       for(let i=0; i < data.length; i++){
+  //         tmp.push({ item_id: i, item_text: data[i].name });
+  //       }
+  //       // console.log(Response)
+  //       this.dropdownList = tmp;
+  //     },
+  //       (error) => {
+  //         console.log(error);
+  //       }
+  //     )
+  // }
   //Save Student Code
   saveClick() {
     if (this.newStudent.name == "" || this.newStudent.name == null) {
@@ -90,9 +88,10 @@ export class StudentComponent implements OnInit {
       this.newStudent.email = "";
       this.newStudent.gender = "";
       this.newStudent.address = "";
-      this.newStudent.department = "";
       this.newStudent.age = "";
-      this.newStudent.subjects
+      this.newStudent.subjectName="";
+      this.newStudent.subjectid="";
+      this.newStudent.subjectList
     },
       (error) => {
         console.log(error);
@@ -122,5 +121,11 @@ export class StudentComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+  }
+  MultiDropBox(e:any)
+  {
+    //debugger;
+    let ss = e.value;
+    this.newStudent.subjectList = ss;
   }
 }
