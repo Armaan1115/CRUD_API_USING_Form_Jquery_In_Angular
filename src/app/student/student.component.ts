@@ -1,9 +1,9 @@
 import { Subjects } from './../subject';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Student } from './student';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { StudentService } from './student.service';
+import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms'; 
 declare var $: any;
 
 @Component({
@@ -18,6 +18,8 @@ export class StudentComponent implements OnInit {
   newStudent: Student = new Student();
   editStudent: Student = new Student();
   subjects:Subjects[]=[]
+  form: FormGroup = new FormGroup({});  
+  
   GetSubject()
   {
     this.subjects = [
@@ -29,7 +31,11 @@ export class StudentComponent implements OnInit {
     ];
     
   }
-  constructor(private studentService: StudentService, private fb: FormBuilder) { }
+  constructor(private studentService: StudentService, private fb: FormBuilder) { 
+    this.form = fb.group({  
+      mobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]]  
+    })  
+  }
 
   ngOnInit(): void {
     this.GetAll();
@@ -42,9 +48,10 @@ export class StudentComponent implements OnInit {
 
     $(document).ready(function(){
     $("#btn1").click(function () {
-      $("#maindiv").slideToggle(3000)
+      $("#maindiv").slideToggle(1000)
       });
     })
+ 
   }
   
   GetAll() {

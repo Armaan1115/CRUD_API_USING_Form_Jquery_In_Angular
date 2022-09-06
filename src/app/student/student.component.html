@@ -11,51 +11,57 @@ style="margin-left: 83%">
     <div class="col-2 offset-2 row" style="margin-top: 16px;">
      
       <div class="form-group row">
-        <label for="txtname" class="col-sm-4"><b>Name:</b></label>
+        <label for="txtname" class="col-sm-4"><b style="color: black;"><b class="text-danger">*</b>Name:</b></label>
         <div class="col-sm-8">
           <input type="text" id="txtname" class="form-control text-center" 
-            placeholder="Student Name" name="name" [(ngModel)]="newStudent.name" />
+            placeholder="Student Name" name="name" #name="ngModel" required [(ngModel)]="newStudent.name" />
+          <span class="help-bpx text-danger" *ngIf="name.touched  && !name.valid">*Please Enter Name</span>
+
         </div>
       </div>
       <div class="form-group row">
-        <label for="txtage" class="col-sm-4"><b>Age:</b></label>
+        <label for="txtage" class="col-sm-4"><b style="color: black;"><b class="text-danger">*</b>Age:</b></label>
         <div class="col-sm-8" style="width: 262px;">
-          <input type="text" id="txtage"   class="form-control text-center" 
-            placeholder="Student Age" name="age" [(ngModel)]="newStudent.age" />
+          <input type="number" id="txtage"   class="form-control text-center" 
+            placeholder="Student Age" name="age" #age="ngModel" required [(ngModel)]="newStudent.age" />
+            <span class="help-bpx text-danger" *ngIf="age.touched && !age.valid">*Please Enter Age</span>
         </div>
       </div>
       <div class="form-group row">
-        <label for="txtaddress" class="col-sm-4"><b>Address:</b></label>
+        <label for="txtaddress" class="col-sm-4"><b style="color: black;"><b class="text-danger">*</b>Address:</b></label>
         <div class="col-sm-8">
           <input type="text" id="txtcity" class="form-control text-center" style="margin-left: 3px;width: 188px;" 
-          placeholder="Student Address" name="address"
+          placeholder="Student Address" name="address" required #address="ngModel" 
             [(ngModel)]="newStudent.address" />
+            <span class="help-bpx text-danger" *ngIf="address.touched && !address.valid">*Please Enter Address</span>
         </div>
       </div>
     </div>
     <div class="col-2 row m-2 p-2" style="align-items: center;justify-content: center;">
       <div class="form-group row">
-        <label for="txtstate" class="col-sm-4"><b>Mob:</b></label>
+        <label for="txtstate" class="col-sm-4"><b style="color: black;"><b class="text-danger">*</b>Mob:</b></label>
         <div class="col-sm-8">
-          <input type="text" id="txtphoneNumber" class="form-control text-center" placeholder="Mobile Number"
-            name="phoneNumber" [(ngModel)]="newStudent.phoneNumber" />
+          <input type="number" id="txtphoneNumber" class="form-control text-center text-warning" placeholder="Mobile Number"
+            name="phoneNumber" required #Mob="ngModel" [(ngModel)]="newStudent.phoneNumber" />
+            <span class="help-bpx text-danger" *ngIf="Mob.touched && !Mob.valid">*Please Enter Mob Num</span>
         </div>
       </div>
       <div class="form-group row">
-        <label for="txtemail" class="col-sm-4"><b>Email:</b></label>
+        <label for="txtemail" class="col-sm-4"><b style="color: black;"><b class="text-danger">*</b>Email:</b></label>
         <div class="col-sm-8">
           <input type="text" id="txtemail" class="form-control text-center" placeholder="Student E-Mail" name="state"
-            [(ngModel)]="newStudent.email" />
+          email required #email="ngModel" [(ngModel)]="newStudent.email" />
+          <span class="help-bpx text-danger" *ngIf="email.touched && !email.valid">*Please Enter Valid Email</span>
         </div>
       </div>
-            <div >
+            <span class="text-primary">         
        <mat-form-field appearance="standard">
-        <mat-label>Subjects</mat-label>
+        <!-- <mat-label>Subjects</mat-label> -->
         <mat-select (selectionChange)="MultiDropBox($event)" multiple>
-          <mat-option *ngFor="let sub of subjects" value="{{sub.id}}">{{sub.name}}</mat-option>
+          <mat-option  *ngFor="let sub of subjects" value="{{sub.id}}" placeholder="Student E-Mail">{{sub.name}} </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </span>
 
     </div>
     
@@ -65,24 +71,24 @@ style="margin-left: 83%">
     </div>
     <div class="col-3 row m-2 p-2">
       <div class="form-group row">
-        <label><b>Gender:</b></label>
+        <label><b style="color: black;"><b class="text-danger">*</b>Gender:</b></label>
         <div class="col-sm-8" style="margin: -56px -96px 39px 86px;;">
           <label class="form-check-label" for="txtMale">
-            <input type="radio" class="form-check-input" name="Male" id="txtMale" value="Male"
-              [(ngModel)]="newStudent.gender">Male
+            <input type="radio" class="form-check-input" name="Male" id="txtMale" value="Male" required
+              [(ngModel)]="newStudent.gender"><b style="color: #000000c7;">Male</b>
           </label>
           <br>
           <label class="form-check-label" for="txtFemale">
-            <input type="radio" class="form-check-input" name="Female" id="txtFemale" value="Female"
+            <input type="radio" class="form-check-input" name="Female" id="txtFemale" value="Female" required
               [(ngModel)]="newStudent.gender">
-            Female
+              <b style="color: #000000c7;">Female</b>
           </label>
           <br>
 
           <label class="form-check-label" for="txtOther">
-            <input type="radio" class="form-check-input" name="Other" id="txtOther" value="Other"
+            <input type="radio" class="form-check-input" name="Other" id="txtOther" value="Other" required
               [(ngModel)]="newStudent.gender">
-            Other
+              <b style="color: #000000c7;">Other</b>
           </label>
     
         </div>
@@ -90,8 +96,8 @@ style="margin-left: 83%">
 
 
       <!-- Footer Of Modal -->
-      <div class="modal-footer" style="margin: 104px 0 -21px -101px;">
-        <button (click)="saveClick()" type="button" class="btn btn-primary">
+      <div class="modal-footer" style="margin: 104px 0 -21px -101px;"><button (click)="saveClick()"
+         type="button" class="btn btn-primary" [disabled]="!form.valid">
           Save
         </button>
         <button type="button" class="btn btn-danger">
