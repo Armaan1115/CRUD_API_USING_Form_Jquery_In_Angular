@@ -27,7 +27,5 @@ export class StudentService {
   {
     return this.httpClient.delete<any>("http://localhost:60204/api/student/" + id);
   } 
-  // GetAllSubject():Observable<any>{
-  //   return this.httpClient.post<
-  // }
+ 
 }

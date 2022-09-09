@@ -1,9 +1,10 @@
-import { Subjects } from './../subject';
+import { Subjects } from './subject';
 import { Component, OnInit } from '@angular/core';
 import { Student } from './student';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { StudentService } from './student.service';
-import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms'; 
+import { FormBuilder, FormGroup, FormControl, Validators, Form} from '@angular/forms'; 
+import Swal from 'sweetalert2/dist/sweetalert2.js';  
+
 declare var $: any;
 
 @Component({
@@ -18,8 +19,9 @@ export class StudentComponent implements OnInit {
   newStudent: Student = new Student();
   editStudent: Student = new Student();
   subjects:Subjects[]=[]
-  form: FormGroup = new FormGroup({});  
-  
+  RegisterForm:FormGroup;
+  registerForm:Form;
+  submitted = false;
   GetSubject()
   {
     this.subjects = [
@@ -31,29 +33,73 @@ export class StudentComponent implements OnInit {
     ];
     
   }
-  constructor(private studentService: StudentService, private fb: FormBuilder) { 
-    this.form = fb.group({  
-      mobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]]  
-    })  
+  constructor(private studentService: StudentService, private formBuilder: FormBuilder) { 
   }
-
   ngOnInit(): void {
     this.GetAll();
     this.GetSubject();
+    // this.contactForm = this.formBuilder.group({country: [null]});
+    //Validations
+    this.RegisterForm=this.formBuilder.group({
+      Name:['',Validators.required],
+      Age:['',Validators.required],
+      Address:['',[Validators.required,Validators.minLength(3)]],
+      PhoneNumber:['',Validators.required],
+      Email:['',[Validators.required,Validators.email]],
+      Subject:['',Validators.required],
+      gender:['',Validators.required],  
+    })
 
-    this.contactForm = this.fb.group({
-      country: [null]
+    $('#CancelBtn').click(function(){   // Cancel Button For Clear form fields
+    $('#MainForm').each(function(){ 
+      this.reset()
+  });
+    })
+    $(document).ready(function(){       //Cancel Button For Reload The Form
+    $('#CancelBtn').click(function(){
+      location.reload();
     });
-
-
-    $(document).ready(function(){
+    });
+    $(document).ready(function(){       //Form Slide Down Animation
     $("#btn1").click(function () {
       $("#maindiv").slideToggle(1000)
       });
     })
- 
-  }
+    $(document).ready(function(){       //Regex For Phone Number
   
+      $("#phone_number").on("blur", function(){
+            var mobNum = $(this).val();
+            var filter = /^(\+\d{1,3}[- ]?)?\d{10}$/;
+              if (filter.test(mobNum)) {
+                if(mobNum.length==10){
+                      // alert("valid");
+                 } else {
+                    alert('Please put 10  digit mobile number');
+                  }
+                }
+                else {
+                  alert('Not a valid number');
+               }
+      });
+    });
+    $(document).ready(function () {     //Regex For Email Validations   
+      $("#emailValidation").change(function () {    
+      var inputValues = $(this).val();    
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;    
+      if(!regex.test(inputValues)){    
+      alert("invalid email id");  }    
+      });    
+    });
+   
+  }
+  //Validations
+  onSubmit(){
+    this.submitted=true;
+    if(this.RegisterForm.invalid){
+      return;
+    }
+    alert("success") ;
+  }
   GetAll() {
     this.studentService.GetAllStudent().subscribe
       ((response) => {
@@ -65,30 +111,16 @@ export class StudentComponent implements OnInit {
         }
       )
   }
-  // GetData():void{
-  //   let tmp = [];
-  //   this.http.get<any>('https://localhost:44390/api/Checkeditems/api/subject').subscribe
-  //     ((data) => {
-  //       for(let i=0; i < data.length; i++){
-  //         tmp.push({ item_id: i, item_text: data[i].name });
-  //       }
-  //       // console.log(Response)
-  //       this.dropdownList = tmp;
-  //     },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     )
-  // }
-  //Save Student Code
   saveClick() {
     if (this.newStudent.name == "" || this.newStudent.name == null) {
-      alert('Please Enter The Name')
+      // alert('Please Enter The Name')
       return;
     }
     this.newStudent.id = 0;
     this.studentService.saveStudent(this.newStudent).subscribe((response) => {
       this.GetAll();
+      Swal.fire('Thank you...', 'You submitted successfully!', 'success')
+      window.location.reload();
       this.newStudent.name = "";
       this.newStudent.age = "";
       this.newStudent.phoneNumber = "";
@@ -98,7 +130,8 @@ export class StudentComponent implements OnInit {
       this.newStudent.age = "";
       this.newStudent.subjectName="";
       this.newStudent.subjectid="";
-      this.newStudent.subjectList
+      this.newStudent.subjectList=[];
+      
     },
       (error) => {
         console.log(error);
@@ -117,7 +150,6 @@ export class StudentComponent implements OnInit {
         console.log(error);
       });
   }
-
   deleteClick(e: any, i: number) {
     // alert(i)
     let ans = confirm(" Are You Sure Want To Delete Data")
@@ -135,4 +167,5 @@ export class StudentComponent implements OnInit {
     let ss = e.value;
     this.newStudent.subjectList = ss;
   }
+ 
 }

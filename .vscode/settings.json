@@ -6,6 +6,8 @@
         "countryid",
         "coutry",
         "Csdropdown",
+        "datatable",
+        "datatables",
         "Fordropdown",
         "httpclient",
         "insertfrom",
@@ -14,6 +16,9 @@
         "stateid",
         "statlist",
         "subjectid",
+        "Swal",
+        "sweetalert",
+        "txtphone",
         "vertexshader"
     ]
 }

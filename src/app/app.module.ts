@@ -13,7 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { DropdownComponent } from './Cascading_Dropdown/dropdown/dropdown.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { CheckBoxItemComponent } from './Checkbox/check-box-item/check-box-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -24,7 +23,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AboutComponent,
     PrivacyComponent,
     DropdownComponent,
-    CheckBoxItemComponent,
     
  
 
